@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import ReactMarkdown from 'react-markdown'
 import gfm from 'remark-gfm'
 
+// Tiene bastante mejora (es uno de mis primeros poyectos en React), 
+// si ves algún error o mejora puedes comentarmelo -> hola@danik.dev
 
 function App() {
   const [markdown, setMarkdown] = useState(textareaDefault);
@@ -92,7 +94,7 @@ And here. | Okay. | I think we get it.
 
 ![freeCodeCamp Logo](https://cdn.freecodecamp.org/testable-projects-fcc/images/fcc_secondary.svg)
 
-
+![DaniK Logo](https://avatars.githubusercontent.com/u/55883836)
 `;
 
 export default App;
