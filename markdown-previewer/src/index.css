@@ -25,3 +25,12 @@ code {
     height: 85vh;
   }
 }
+
+.no-full {
+  height: 85vh;
+	overflow-y: auto
+}
+
+.full {
+  height: 100%;
+}

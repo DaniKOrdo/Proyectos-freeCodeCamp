@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import ReactMarkdown from 'react-markdown'
 import gfm from 'remark-gfm'
 
@@ -8,12 +8,37 @@ import gfm from 'remark-gfm'
 function App() {
   const [markdown, setMarkdown] = useState(textareaDefault);
   const handleChange = (e) => {
-    setMarkdown(e.target.value);
+    setMarkdown(e.target.value)
   }
+
+  const handleClickPreview = (e) => {
+    const preview = document.getElementById("preview").classList
+
+    if (preview.contains("no-full")) {
+      preview.remove("no-full")
+      preview.add("full")
+      
+      if (e.target.tagName === "svg") {
+        e.target.children[0].style.color = "#1f2937"
+      } else {
+        e.target.style.color = "#1f2937"
+      }
+    } else {
+      preview.remove("full")
+      preview.add("no-full");
+
+      if (e.target.tagName === "svg") {
+        e.target.children[0].style.color = "white"
+      } else {
+        e.target.style.color = "white"
+      }
+    }
+  }
+
   return (
     <div className="flex flex-col h-10v md:flex-row">
       <Editor changeText={handleChange} value={markdown}/>
-      <Preview value={markdown}/>
+      <Preview click={handleClickPreview} value={markdown}/>
     </div>
   );
 }
@@ -38,13 +63,18 @@ const Preview = (props) => {
   return (
     <div className="basis-1/2 my-6 mx-4">
       <div className="bg-gray-600 p-3 flex items-center rounded-t-lg">
-        <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 21h7a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v11m0 5l4.879-4.879m0 0a3 3 0 104.243-4.242 3 3 0 00-4.243 4.242z"></path>
         </svg>
         <h1 className="text-xl">Preview</h1>
+        <button className="ml-auto" onClick={props.click}>
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+          </svg>
+        </button>
       </div>
-      <div className="bg-gray-400 p-4 rounded-b-lg">
-      <ReactMarkdown id="preview" className="prose max-w-none" remarkPlugins={[gfm]} children={props.value} />
+      <div id="preview" className="bg-gray-400 p-4 rounded-b-lg no-full">
+        <ReactMarkdown className="prose max-w-none" remarkPlugins={[gfm]} children={props.value} />
       </div>
     </div>
   );
